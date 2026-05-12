@@ -43,24 +43,30 @@ for msg in consumer:
     label, trusted = auto_label(prediction)
 
     feature_event = {
-        "ip": raw_event.get("ip"),
-        "features": features
+    	"ip": raw_event.get("ip"),
+    	"features": features,
+    	"iac_order": features.get("iac_order"),
+    	"iac_event_count": features.get("iac_event_count"),
     }
 
     prediction_event = {
-        "ip": raw_event.get("ip"),
-        "prediction": prediction,
-        "label": label,
-        "trusted": trusted
+    	"ip": raw_event.get("ip"),
+    	"prediction": prediction,
+    	"top_class": max(prediction, key=prediction.get),
+    	"confidence": max(prediction.values()),
+    	"label": label,
+    	"trusted": trusted
     }
-
+    
     dataset_event = {
-        "ip": raw_event.get("ip"),
-        "banner": raw_event.get("banner", ""),
-        "features": features,
-        "prediction": prediction,
-        "label": label,
-        "trusted": trusted
+    	"ip": raw_event.get("ip"),
+    	"banner": raw_event.get("banner", ""),
+    	"features": features,
+    	"prediction": prediction,
+    	"top_class": max(prediction, key=prediction.get),
+    	"confidence": max(prediction.values()),
+    	"label": label,
+    	"trusted": trusted,
     }
 
     producer.send(TELNET_FEATURES, feature_event)
