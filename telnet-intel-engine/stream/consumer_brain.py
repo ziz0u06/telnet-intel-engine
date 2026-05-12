@@ -5,6 +5,7 @@ from stream.producer import TelnetProducer
 from stream.topics import TELNET_RAW, TELNET_FEATURES, TELNET_PREDICTIONS, TELNET_DATASET
 from features.extractor import extract_features
 from ml.bayesian import BayesianClassifier
+from db.store import append_dataset
 
 producer = TelnetProducer()
 model = BayesianClassifier()
