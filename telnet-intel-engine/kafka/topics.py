@@ -1,0 +1,6 @@
+TELNET_JOBS = "telnet.jobs"
+TELNET_RAW = "telnet.raw"
+TELNET_FEATURES = "telnet.features"
+TELNET_PREDICTIONS = "telnet.predictions"
+TELNET_DATASET = "telnet.dataset"
+TELNET_ANOMALIES = "telnet.anomalies"
