@@ -1,10 +1,9 @@
-from kafka import KafkaConsumer
-from kafka.producer import TelnetProducer
-from kafka.topics import TELNET_JOBS, TELNET_RAW
-
-from scanner.worker import scan_host
-
 import json
+from kafka import KafkaConsumer
+
+from stream.producer import TelnetProducer
+from stream.topics import TELNET_JOBS, TELNET_RAW
+from scanner.worker import scan_host
 
 consumer = KafkaConsumer(
     TELNET_JOBS,
@@ -17,9 +16,7 @@ producer = TelnetProducer()
 print("[+] Agent consumer started")
 
 for msg in consumer:
-
     job = msg.value
-
     target = job.get("target")
 
     if not target:
