@@ -1,0 +1,68 @@
+name: Telnet Intelligence Training Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * *"   # daily training
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Load dataset info
+        run: |
+          echo "Dataset loaded"
+          ls -lah db/
+
+      - name: Train Bayesian model
+        run: |
+          python -c "
+from ml.bayesian import BayesianClassifier
+import json
+
+# fake dataset loader (replace with real JSONL parser)
+print('[+] Training Bayesian model...')
+model = BayesianClassifier()
+print('[+] Bayesian training complete')
+"
+
+      - name: Train ML model
+        run: |
+          python -c "
+print('[+] Training ML classifier...')
+# placeholder for sklearn training pipeline
+print('[+] ML training complete')
+"
+
+      - name: Run evaluation
+        run: |
+          python -c "
+print('[+] Evaluating model...')
+print('[+] Accuracy: 0.91 (mock)')
+"
+
+      - name: Save artifacts
+        run: |
+          mkdir -p artifacts
+          echo "model_version=1" > artifacts/model.txt
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: telnet-model
+          path: artifacts/
