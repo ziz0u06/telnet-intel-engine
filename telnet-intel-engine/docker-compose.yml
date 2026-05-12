@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  telnet-intel-engine:
+    image: python:3.11
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: tail -f /dev/null
